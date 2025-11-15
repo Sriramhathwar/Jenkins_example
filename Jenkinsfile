@@ -6,8 +6,20 @@ pipeline {
         booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Run test stage?')
         choice(name: 'ENV', choices: ['dev', 'qa', 'prod'], description: 'Select environment')
     }
+    environment {
+        BRANCH = "${env.GIT_BRANCH}"
+    }
+
 
     stages {
+
+        stage("Environment branch") {
+            steps {
+                sh '''
+                echo "Deploying branch $BRANCH"
+                '''
+            }
+        }
 
         stage('Print Params') {
             steps {
